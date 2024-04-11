@@ -15,6 +15,7 @@ from .const import (
     MODEL_FRYER_MAF02,
     MODEL_FRYER_MAF03,
     MODEL_FRYER_MAF07,
+    MODEL_FRYER_MAF07C,
     MODEL_FRYER_MAF10A,
     MODEL_FRYER_YBAF01,
     MODEL_FRYER_MAF05A,
@@ -107,6 +108,29 @@ MIOT_MAPPING = {
         "pause": {"siid": 2, "aiid": 3},
         "start_custom_cook": {"siid": 3, "aiid": 1},
         "resume_cooking": {"siid": 3, "aiid": 2}
+    },
+    MODEL_FRYER_MAF07C: {
+        "status": {"siid": 2, "piid": 1},  # read, notify
+        "device_fault": {"siid": 2, "piid": 2},  # read, notify
+        "target_time": {"siid": 2, "piid": 3},  # read, notify, write
+        "target_temperature": {"siid": 2, "piid": 4},  # read, notify, write
+        "left_time": {"siid": 2, "piid": 5},  # read, notify
+        "auto_keep_warm": {"siid": 2, "piid": 6},  # read, notify, write
+        "current_keep_warm": {"siid": 2, "piid": 7},  # read, notify, write
+        "mode": {"siid": 2, "piid": 8},  # read, notify, write
+        "recipe_id": {"siid": 2, "piid": 10},  # read, notify, write
+        "recipe_name": {"siid": 2, "piid": 11},  # read, notify, write
+        "recipe_sync": {"siid": 2, "piid": 12},  # read, notify, write
+        "taret_cooking_measure": {"siid": 2, "piid": 13},  # read, notify, write
+        "turn_pot": {"siid": 2, "piid": 14},  # read, notify
+        "turn_pot_config": {"siid": 2, "piid": 16},  # read, notify, write
+        "reservation_left_time": {"siid": 2, "piid": 17},  # read, notify, write
+        "cooking_weight": {"siid": 2, "piid": 18},  # read, notify, write
+        "start_cook": {"siid": 2, "aiid": 1},
+        "cancel_cooking": {"siid": 2, "aiid": 2},
+        "pause": {"siid": 2, "aiid": 3},
+        "resume_cook": {"siid": 2, "aiid": 4},
+        "start_recipe_cook": {"siid": 2, "aiid": 5}
     },
     MODEL_FRYER_MAF10A: {
         "status": {"siid": 2, "piid": 1},  # read, notify
