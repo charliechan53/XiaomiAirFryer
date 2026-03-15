@@ -27,7 +27,7 @@ from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 
 
 from miio import DeviceException
-from .fryer_miot import FryerMiot, FryerMiotYBAF, FryerMiotSCK, FryerMiotMi
+from .fryer_miot import FryerMiot, FryerMiotYBAF, FryerMiotSCK, FryerMiotMi, FryerMiotViomi, FryerMiotXiaomi
 
 from .const import (
     ATTR_MODE,
@@ -42,6 +42,8 @@ from .const import (
     MODELS_CARELI,
     MODELS_SILEN,
     MODELS_MIOT,
+    MODELS_VIOMI,
+    MODELS_XIAOMI,
     MODELS_ALL_DEVICES
 )
 
@@ -103,13 +105,15 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
         fryer = FryerMiotSCK(host, token, model=model)
     elif model in MODELS_MIOT:
         fryer = FryerMiotMi(host, token, model=model)
+    elif model in MODELS_VIOMI:
+        fryer = FryerMiotViomi(host, token, model=model)
+    elif model in MODELS_XIAOMI:
+        fryer = FryerMiotXiaomi(host, token, model=model)
     elif model in MODELS_ALL_DEVICES:
         fryer = FryerMiot(host, token, model=model)
     hass.data[DOMAIN][host] = fryer
 
     # init setup for each supported domains
-    for platform in DOMAINS:
-        hass.async_create_task(hass.config_entries.async_forward_entry_setup(
-            entry, platform))
+    await hass.config_entries.async_forward_entry_setups(entry, DOMAINS)
 
     return True

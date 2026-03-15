@@ -31,6 +31,8 @@ from .const import (
     MODELS_CARELI,
     MODELS_MIOT,
     MODELS_SILEN,
+    MODELS_VIOMI,
+    MODELS_XIAOMI,
     MODELS_ALL_DEVICES
 )
 
@@ -44,7 +46,7 @@ SENSOR_TYPES_MAF = {
     "target_temperature": ["Target Temperature", None, "target_temperature", UnitOfTemperature.CELSIUS, None,SensorDeviceClass.TEMPERATURE],
     "left_time": ["Remaining", None, "left_time", UnitOfTime.MINUTES, "mdi:timer", None],
     "recipe_id": ["Recipe Id", None, "recipe_id", None, "mdi:rice", None],
-    "appoint_time": ["Apponit Time", None, "appoint_time", UnitOfTime.MINUTES, "mdi:timelapse", None],
+    "appoint_time": ["Appoint Time", None, "appoint_time", UnitOfTime.MINUTES, "mdi:timelapse", None],
     "food_quanty": ["Food Quanty", None, "food_quanty", None, "mdi:flash-outline", None],
     "preheat_switch": ["Preheat Phase", None, "preheat_switch", None, "mdi:pot-steam-outline", None],
     "appoint_time_left": ["Appoint Time Left", None, "appoint_time_left", UnitOfTime.MINUTES, "mdi:timer", None],
@@ -78,6 +80,24 @@ SENSOR_TYPES_MIOT = {
     "mode": ["Recipe Id", None, "mode", None, "mdi:stairs", None]
 }
 
+SENSOR_TYPES_VIOMI = {
+    "status": ["Status", None, "status", None, "mdi:bowl", None],
+    "target_time": ["Target Time", None, "target_time", None, "mdi:menu", None],
+    "target_temperature": ["Target Temperature", None, "target_temperature", UnitOfTemperature.CELSIUS, None, SensorDeviceClass.TEMPERATURE],
+    "left_time": ["Remaining", None, "left_time", UnitOfTime.MINUTES, "mdi:timer", None],
+    "recipe_id": ["Recipe Id", None, "recipe_id", None, "mdi:rice", None],
+    "turn_pot_status": ["Turn Pot Status", None, "turn_pot_status", None, "mdi:rotate-3d-variant", None],
+}
+
+SENSOR_TYPES_XIAOMI = {
+    "status": ["Status", None, "status", None, "mdi:bowl", None],
+    "mode": ["Mode", None, "mode", None, "mdi:stairs", None],
+    "target_time": ["Target Time", None, "target_time", UnitOfTime.MINUTES, "mdi:menu", None],
+    "left_time": ["Remaining", None, "left_time", UnitOfTime.MINUTES, "mdi:timer", None],
+    "target_temperature": ["Target Temperature", None, "target_temperature", UnitOfTemperature.CELSIUS, None,SensorDeviceClass.TEMPERATURE],
+    "recipe_id": ["Recipe Id", None, "recipe_id", None, "mdi:rice", None],
+    "turn_pot": ["Turn Pot", None, "turn_pot", None, "mdi:rotate-3d-variant", None],
+}
 
 async def async_setup_platform(hass, config, async_add_entities, discovery_info=None):
     """Import Mijia AirFryer configuration from YAML."""
@@ -137,6 +157,12 @@ async def async_setup_entry(hass, config, async_add_devices, discovery_info=None
             sensors.append(XiaomiAirFryerSensor(fryer, host, stype, config))
     elif model in MODELS_MIOT:
         for stype in SENSOR_TYPES_MIOT.values():
+            sensors.append(XiaomiAirFryerSensor(fryer, host, stype, config))
+    elif model in MODELS_VIOMI:
+        for stype in SENSOR_TYPES_VIOMI.values():
+            sensors.append(XiaomiAirFryerSensor(fryer, host, stype, config))
+    elif model in MODELS_XIAOMI:
+        for stype in SENSOR_TYPES_XIAOMI.values():
             sensors.append(XiaomiAirFryerSensor(fryer, host, stype, config))
     elif model in MODELS_ALL_DEVICES:
         for stype in SENSOR_TYPES_YBAF.values():
